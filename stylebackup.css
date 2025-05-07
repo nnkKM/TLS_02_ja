@@ -1,0 +1,92 @@
+#map {
+    width: 100%;
+    height: 100vh;
+}
+#controls {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+.disp-layers {
+    background-color: #ffffff;
+    margin: 3px;
+}
+.disp-attributes {
+    background-color: #ffffff;
+    margin: 3px;
+}
+/* 右上の現在のズームレベル表示 */
+#zoom-level {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+/* メモ機能表示 */
+#note-display {
+    display: none;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.5); /* 半透明の背景色 */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    white-space: nowrap; /* 改行されないようにする */
+}
+.toggle-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1em;
+}
+#legend {
+    position: absolute;
+    bottom: 60px;
+    right: 10px;
+    padding: 1px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: none; /* 初期状態は非表示 */
+}
+.legend-toggle {
+    position: absolute;
+    bottom: 60px;
+    right: 10px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 1px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* スマホ向けのスタイル */
+@media (max-width: 767px) {
+    #legend {
+        bottom: 30px;
+        right: 5px;
+        padding: 0.5px;
+        /* スマホで表示する際には他に適用したいスタイルをここに書きます */
+    }
+    .legend-toggle {
+        bottom: 30px;
+        right: 5px;
+        padding: 0.5px;
+        font-size: 0.8em;
+        /* スマホで表示する際には他に適用したいスタイルをここに書きます */
+    }
+    #legend img {
+        width: 120px; /* 必要に応じて適切なサイズに変更してください */
+        height: auto; /* 縦横比を保持 */
+    }
+    #note-display {
+        font-size: 9px; /* スマホでフォントサイズを小さくする */
+    }
+}

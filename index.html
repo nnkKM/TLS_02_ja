@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLS ver.00.1</title>
+    <link href="lib/maplibre/maplibre-gl.css" rel="stylesheet"/>
+    <link href="lib/mapbox-gl-js/mapbox-gl-draw.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="map"></div>
+    <div id="controls">
+        <!-- レイヤコントロール -->
+        <!-- レイヤ命名規則　　　最大：全角13文字　推奨：全角7文字　　　以内 -->
+        <button id="toggle-layers-btn">Layer On/Off</button>
+        <div id="layers-container" class="disp-layers" style="display: none;">
+            <input type="radio" id="style1" name="mapstyle" value="versatiles" checked>
+            <label for="style1">OpenStreetMap</label>
+            <br>
+       <!-- <input type="radio" id="style2" name="mapstyle" value="tileservergl">
+            <label for="style2">TileServer GL</label>
+            <br>  -->
+            <input type="radio" name="mapstyle" value="kkc" id="style5">
+            <label for="style5">OvertureMaps</label>
+            <br>
+            <input type="radio" name="mapstyle" value="none" id="style4">
+            <label for="style4">Blank map</label>
+            <br>
+            <input type="radio" name="mapstyle" value="osm" id="style3">
+            <label for="style3">OSM for comparison</label>
+            <br>
+           <label for="outline-layer-chk">
+                 <input type="checkbox" id="outline-layer-chk" checked>
+                 Administrative boundary
+            </label>
+            <br>
+            <label>
+                <button id="sdg1121-toggle-btn" class="toggle-btn">▶</button>
+                <input type="checkbox" id="sdg1121-layer-chk" checked>
+                SDG11.2.1
+            </label>
+            <div id="sdg1121-layers" class="sub-layers" style="display: none;">
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="population-all-fill-layer-chk" checked>
+                Population（Year: <span id="year-value-pop">2020</span>）
+            </label>
+            <!-- 年代ごとの表示スライダーバー -->
+            <div id="slider-container-pop">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="range" id="year-slider-pop" min="2000" max="2020" value="2020" step="1">
+            </div>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="popchange-all-fill-layer-chk" >
+                Population change(<span id="year-value-popchange">2000</span>～<span id="year-value-popbase">2020</span>)
+            </label>
+            <div class="slider-wrapper" id="newslider-wrapper-poch">
+                <label for="newslider">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div id="newslider-poch" class="slider-container">
+                    <div class="slider-track"></div>
+                    <div class="slider-range" id="slider-range-poch" style="width: 100%;"></div>
+                    <div class="slider-thumb" id="thumb-min-poch"></div>
+                    <div class="slider-thumb" id="thumb-max-poch" style="left: 100%;"></div>
+                </div>
+            </div>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PublicTransport-points-layer-chk" checked>
+                Bus stop & Ferry terminal
+            </label>
+            <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="MicroletRoute-line-layer-chk" checked>
+                MicroletRoute
+            </label>
+        </div>
+            <br>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="LCRPGR-fill-layer-chk">
+                SDG11.3.1
+            <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCR-PGR(<span id="year-value-lcrpgr">2000</span>～<span id="year-value-lcrpgrbase">2020</span>)
+            </label>
+            <div class="slider-wrapper" id="newslider-wrapper-lcr">
+                <label for="newslider">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div id="newslider-lcr" class="slider-container">
+                    <div class="slider-track"></div>
+                    <div class="slider-range" id="slider-range-lcr" style="width: 100%;"></div>
+                    <div class="slider-thumb" id="thumb-min-lcr"></div>
+                    <div class="slider-thumb" id="thumb-max-lcr" style="left: 100%;"></div>
+                </div>
+            </div>
+            <label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="PM25-all-fill-layer-chk">
+                SDG11.6.2
+            <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PM2.5
+            </label>
+            <br>
+
+        </div>
+        <!-- メモ機能 -->
+        <div id="note-form" style="display: none;">
+            <label for="note-text">Note:</label>
+            <input type="text" id="note-text"/>
+            <button id="save-note-btn">Save</button>
+        </div>
+    </div>
+
+    <div id="note-display" style="display: none;">
+        <div id="note-content"></div>
+    </div>
+
+    <!-- 現在のズームレベル -->
+    <div id="zoom-level"></div>
+
+    <!-- 属性情報表示 -->
+    <div id="properties-display" style="display: none;"></div>
+
+
+    <!-- 凡例 -->
+    <div id="legend" style="display: none;">
+        <img src="legend.png" alt="Legend" />
+    </div>
+    <div class="legend-toggle" id="legend-toggle">LCR-PGR Legend</div>
+
+
+    <!-- 既存のライブラリは以下に記述 -->
+    <script src="lib/turf.min.js"></script>
+    <script src="lib/maplibre/maplibre-gl.js"></script>
+    <script src="lib/pmtiles.js"></script>
+    <script src="lib/mapbox-gl-js/mapbox-gl-draw.js"></script>
+    <!-- オリジナルjsファイルは以下に記述 -->
+    <script src="main.js"></script>
+</body>
+</html>

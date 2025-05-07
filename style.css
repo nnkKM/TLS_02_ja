@@ -1,0 +1,199 @@
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* スクロールバーを非表示 */
+}
+
+/* 地図の親コンテナの高さを100%に設定 */
+#map-container {
+    width: 100%;
+    height: 100%;
+    position: relative; /* 子要素を絶対位置で配置するため */
+}
+
+/* 地図エリアのスタイル */
+#map {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #eaeaea; /* 地図が見えない場合の背景色 */
+    z-index: 1; /* 他のUI要素の下に配置 */
+}
+
+/* コントロールパネルのスタイル */
+#controls {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+//    background-color: white;
+    z-index: 1000; /* 地図の上に表示 */
+    max-height: calc(100vh - 15px); /* 画面の高さを超えないように制限 */
+    overflow-y: auto; /* スクロール可能 */
+}
+.disp-layers {
+    background-color: #ffffff;
+    margin: 3px;
+}
+.disp-attributes {
+    background-color: #ffffff;
+    margin: 3px;
+}
+/* ズームレベル表示 */
+#zoom-level {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* 地図の上に表示 */
+}
+.toggle-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1em;
+}
+/* メモ機能表示 */
+#note-display {
+    position: absolute;
+    display: none; /* 初期状態では非表示 */
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明の背景色 */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    white-space: nowrap; /* テキストの改行を防ぐ */
+    z-index: 1000;
+}
+
+/* 凡例（レジェンド）のスタイル */
+#legend {
+    position: absolute;
+    bottom: 60px;
+    right: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: none; /* 初期状態では非表示 */
+    max-height: calc(100vh - 100px); /* 画面の高さを超えないように制限 */
+    overflow-y: auto; /* 縦スクロール可能 */
+    z-index: 1000; /* 地図の上に表示 */
+}
+
+/* 凡例のトグルボタン */
+.legend-toggle {
+    position: absolute;
+    bottom: 60px;
+    right: 10px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 1px;
+    border-radius: 3px;
+    cursor: pointer;
+    z-index: 1000; /* 地図の上に表示 */
+}
+
+/* 属性情報のスタイル */
+#properties-display {
+    position: absolute;
+    background: white;
+    padding: 5px;
+    border: 1px solid black;
+    display: none;
+    z-index: 1000;
+    max-width: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 10px;
+}
+#properties-display table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#properties-display td {
+    padding: 2px 5px;
+    word-break: break-all;
+}
+#properties-display tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+/* 両端が移動するスライダーバー */
+.slider-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.slider-wrapper label {
+    margin-right: 10px; /* スライダーラベルとスライダーの間のスペースを調整 */
+}
+
+.slider-container {
+    display: flex;
+    position: relative;
+    width: 120px;
+    height: 8px;
+}
+
+.slider-track {
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+.slider-range {
+    position: absolute;
+    height: 100%;
+    background: #888888;
+}
+
+.slider-thumb {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #888888;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px;
+    margin-left: -10px; /* 左に寄せる */
+}
+
+
+/* スマホ向けのスタイル */
+@media (max-width: 767px) {
+    #legend {
+        bottom: 45px;
+        right: 5px;
+        padding: 0.5px;
+        /* スマホで表示する際には他に適用したいスタイルをここに書きます */
+    }
+    .legend-toggle {
+        bottom: 30px;
+        right: 5px;
+        padding: 0.5px;
+        font-size: 0.8em;
+        /* スマホで表示する際には他に適用したいスタイルをここに書きます */
+    }
+    #legend img {
+        width: 120px; /* 必要に応じて適切なサイズに変更してください */
+        height: auto; /* 縦横比を保持 */
+    }
+    #note-display {
+        font-size: 9px; /* スマホでフォントサイズを小さくする */
+    }
+}

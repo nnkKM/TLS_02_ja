@@ -1,0 +1,27 @@
+{
+  "version": 8,
+  "name": "OSM Tiles",
+  "glyphs": "https://nnkKM.github.io/TLS_01_2/VersaTiles_Style/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "osm-png-tiles": {
+      "type": "raster",
+      "tiles": [
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      ],
+      "tileSize": 256,
+      "attribution": "<a href='https://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
+    }
+  },
+  "layers": [
+    {
+      "id": "osm-png-layer",
+      "type": "raster",
+      "source": "osm-png-tiles",
+      "minzoom": 0,
+      "maxzoom": 19,
+      "paint": {
+        "raster-saturation": -0.5
+      }
+    }
+  ]
+}
